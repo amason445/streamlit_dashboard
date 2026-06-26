@@ -1,48 +1,12 @@
-import os
-import pandas as pd
-import psycopg
-import streamlit as st
 import altair as alt
-from dotenv import load_dotenv
+import streamlit as st
 
-load_dotenv()
+from database import get_dataframe
+from queries import ACTOR_SUMMARY_QUERY
 
 st.title("Pagila Actors Dashboard")
 
-conn = psycopg.connect(
-    host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT"),
-    dbname=os.getenv("DB_NAME"),
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-)
-
-query = """
-    SELECT
-        CONCAT(INITCAP(first_name), ' ', INITCAP(last_name)) AS actor_name,
-        fm.rating,
-        max(fm.release_year) AS MostRecentAppearance,
-        min(fm.release_year) AS EarliestAppearance,
-        count(fm.rating) AS RatingFrequency,
-        sum(fm.length) / count(DISTINCT fm.film_id) AS AvgMovieLength
-    FROM actor ac
-    INNER JOIN film_actor fac ON
-        ac.actor_id = fac.actor_id
-    INNER JOIN film fm ON
-        fac.film_id = fm.film_id
-    GROUP BY
-        CONCAT(INITCAP(first_name), ' ', INITCAP(last_name)),
-        ac.first_name,
-        ac.last_name,
-        fm.rating
-    ORDER BY 
-        actor_name,
-        fm.rating
-"""
-
-df = pd.read_sql(query, conn)
-
-conn.close()
+df = get_dataframe(ACTOR_SUMMARY_QUERY)
 
 st.subheader("Actor Film Summary by Rating")
 
