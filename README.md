@@ -144,6 +144,16 @@ Builds a LangChain SQL agent using:
 
 The agent is currently scoped to the mart tables needed for actor and film analysis.
 
+## Example Dashboard Images
+
+The `Images` directory includes example outputs from the dashboard:
+
+![Top ten longest movies chart from the Pagila Actors Dashboard](Images/TopTenLongestMovies.png)
+
+![Top ten longest movies part two chart from the Pagila Actors Dashboard](Images/TopTenLongestMovies_v2.png)
+
+![Top ten G-rated actors chart from the Pagila Actors Dashboard](Images/TopTenGActors.png)
+
 ## Development Notes
 
 - Keep credentials in `.env` or Streamlit secrets, never in source files.
@@ -165,4 +175,3 @@ Pagila is made available under the PostgreSQL License. See the upstream [devrimg
 - Add tests for query construction and database helper behavior.
 - Add error handling for missing environment variables or unavailable database connections.
 - Add more dashboard tabs for films, inventory, rentals, and category-level analysis.
-- Add screenshots from the `Images` directory to illustrate the dashboard.
