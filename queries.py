@@ -1,10 +1,10 @@
 ACTOR_SUMMARY_QUERY = """
     SELECT
         actor_name,
-        rating,
+        film_rating as rating,
         mostrecentappearance,
         earliestappearance,
         ratingfrequency,
         avgmovielength
-    FROM actor_movies_agg
+    FROM mrt.actor_movies_agg
 """
